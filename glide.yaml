@@ -1,0 +1,4 @@
+package: sockstun
+import:
+- package: github.com/op/go-logging
+  version: v1
