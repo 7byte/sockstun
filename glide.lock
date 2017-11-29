@@ -1,6 +1,22 @@
 hash: cb2a80bfadc8d8cdb28efd00f21b8633fe853635ba01926d800f1b4aef17c0aa
-updated: 2017-08-25T14:21:05.6916186+08:00
+updated: 2017-11-29T10:28:39.53803726Z
 imports:
 - name: github.com/op/go-logging
   version: b2cb9fa56473e98db8caba80237377e83fe44db5
+- name: github.com/shadowsocks/go-shadowsocks2
+  version: 90a5b4a50462fbbb14262f386251f056a8678a20
+  subpackages:
+  - core
+  - shadowaead
+  - shadowstream
+  - socks
+- name: github.com/Yawning/chacha20
+  version: e3b1f968fc6397b51d963fee8ec8711a47bc0ce8
+- name: golang.org/x/crypto
+  version: 94eea52f7b742c7cbe0b03b22f0c4c8631ece122
+  subpackages:
+  - chacha20poly1305
+  - chacha20poly1305/internal/chacha20
+  - hkdf
+  - poly1305
 testImports: []
