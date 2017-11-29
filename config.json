@@ -1,7 +1,7 @@
 {
-    "server": "127.0.0.1:9898",
+    "server": ":9898",
     "cipher": "AEAD_CHACHA20_POLY1305",
-    "password": "YkMP2^zkKPvwH5C$",
+    "password": "yourpassword",
     "UDPTimeout": 300000000000,
     "logLevel": 5
 }
