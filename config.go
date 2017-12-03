@@ -12,10 +12,15 @@ import (
 
 type config struct {
 	Server     string        `json:"server"`
-	Cipher     string        `json:"cipher"`
-	Password   string        `json:"password"`
+	Nodes      []node        `json:"nodes"`
 	UDPTimeout time.Duration `json:"udpTimeout"`
 	LogLevel   logging.Level `json:"logLevel"`
+}
+
+type node struct {
+	Port     int    `json:"port"`
+	Cipher   string `json:"cipher"`
+	Password string `json:"password"`
 }
 
 func newConfig(confPath string) (c *config, err error) {

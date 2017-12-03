@@ -68,14 +68,16 @@ func main() {
 		return
 	}
 
-	ciph, err := core.PickCipher(conf.Cipher, nil, conf.Password)
-	if err != nil {
-		logger.Error("PickCipher err:%v", err)
-		return
+	for _, node := range conf.Nodes {
+		ciph, err := core.PickCipher(node.Cipher, nil, node.Password)
+		if err != nil {
+			logger.Error("PickCipher err:%v", err)
+			return
+		}
+		addr := fmt.Sprintf("%s:%d", conf.Server, node.Port)
+		go udpRemote(addr, ciph.PacketConn)
+		go tcpRemote(addr, ciph.StreamConn)
 	}
-
-	go udpRemote(conf.Server, ciph.PacketConn)
-	go tcpRemote(conf.Server, ciph.StreamConn)
 
 	sigCh := make(chan os.Signal, 1)
 	signal.Notify(sigCh, syscall.SIGINT, syscall.SIGTERM)
