@@ -29,8 +29,12 @@ func setLogger(level logging.Level) {
 		fmt.Println("init log failed", err)
 		panic(0)
 	}
+	format := logging.MustStringFormatter(
+		`%{color}%{time:2006-01-02 15:04:05.000} %{shortfile} %{shortfunc} %{level:.4s} %{color:reset} %{message}`,
+	)
 	backend := logging.NewLogBackend(file, "", 0)
-	backendLeveled := logging.AddModuleLevel(backend)
+	backendFormatter := logging.NewBackendFormatter(backend, format)
+	backendLeveled := logging.AddModuleLevel(backendFormatter)
 	backendLeveled.SetLevel(level, "")
 	logger = logging.MustGetLogger("main")
 	logger.SetBackend(backendLeveled)
