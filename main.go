@@ -19,7 +19,7 @@ var (
 )
 
 const (
-	logPath = "/var/log/sockstun.log"
+	logPath = "./sockstun.log"
 	pidName = "sockstun.pid"
 )
 
