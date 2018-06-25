@@ -3,6 +3,7 @@
 package main
 
 import (
+	"fmt"
 	"io"
 	"net"
 	"time"
@@ -93,7 +94,8 @@ func tcpLocal(addr, server string, shadow func(net.Conn) net.Conn, getAddr func(
 }
 
 // Listen on addr for incoming connections.
-func tcpRemote(addr string, shadow func(net.Conn) net.Conn) {
+func tcpRemote(host string, port int, shadow func(net.Conn) net.Conn) {
+	addr := fmt.Sprintf("%s:%d", host, port)
 	l, err := net.Listen("tcp", addr)
 	if err != nil {
 		logger.Warning("failed to listen on %s: %v", addr, err)
@@ -128,12 +130,23 @@ func tcpRemote(addr string, shadow func(net.Conn) net.Conn) {
 			rc.(*net.TCPConn).SetKeepAlive(true)
 
 			logger.Info("proxy %s <-> %s", c.RemoteAddr(), tgt)
-			_, _, err = relay(c, rc)
+			wLen, rLen, err := relay(c, rc)
 			if err != nil {
 				if err, ok := err.(net.Error); ok && err.Timeout() {
 					return // ignore i/o timeout
 				}
 				logger.Warning("relay error: %v", err)
+			}
+			if infuxdb != nil {
+				infuxdb.writeDataMeta(&DataMeta{
+					Host:      host,
+					Port:      port,
+					CAddr:     c.RemoteAddr().String(),
+					SAddr:     tgt.String(),
+					RLen:      rLen,
+					WLen:      wLen,
+					Timestamp: time.Now(),
+				})
 			}
 		}()
 	}

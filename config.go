@@ -11,15 +11,23 @@ import (
 )
 
 type config struct {
-	Server     string        `json:"server"`
-	Nodes      []node        `json:"nodes"`
-	UDPTimeout time.Duration `json:"udpTimeout"`
-	LogLevel   logging.Level `json:"logLevel"`
+	Server     string          `json:"server"`
+	Nodes      []node          `json:"nodes"`
+	InfluxDB   *influxDBConfig `json:"influxDB"`
+	UDPTimeout time.Duration   `json:"udpTimeout"`
+	LogLevel   logging.Level   `json:"logLevel"`
 }
 
 type node struct {
 	Port     int    `json:"port"`
 	Cipher   string `json:"cipher"`
+	Password string `json:"password"`
+}
+
+// influxdb配置
+type influxDBConfig struct {
+	Addr     string `json:"addr"`
+	User     string `json:"user"`
 	Password string `json:"password"`
 }
 

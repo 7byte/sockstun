@@ -2,3 +2,4 @@ package: sockstun
 import:
 - package: github.com/op/go-logging
   version: v1
+- package: github.com/influxdata/influxdb/client

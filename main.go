@@ -60,6 +60,9 @@ func main() {
 	if err != nil {
 		return
 	}
+	if _, err := newInfluxdbClient(conf.InfluxDB); err != nil {
+		return
+	}
 	udpTimeout = conf.UDPTimeout
 
 	if conf.LogLevel >= logging.ERROR && conf.LogLevel <= logging.DEBUG {
@@ -78,9 +81,8 @@ func main() {
 			logger.Error("PickCipher err:%v", err)
 			return
 		}
-		addr := fmt.Sprintf("%s:%d", conf.Server, node.Port)
-		go udpRemote(addr, ciph.PacketConn)
-		go tcpRemote(addr, ciph.StreamConn)
+		go udpRemote(conf.Server, node.Port, ciph.PacketConn)
+		go tcpRemote(conf.Server, node.Port, ciph.StreamConn)
 	}
 
 	sigCh := make(chan os.Signal, 1)

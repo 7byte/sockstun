@@ -7,6 +7,11 @@
             "password": "yourpassword"
         }
     ],
+    "influxDB": {
+        "addr": "http://localhost:8086",
+        "user": "",
+        "password": ""
+    },
     "UDPTimeout": 300000000000,
     "logLevel": 5
 }
