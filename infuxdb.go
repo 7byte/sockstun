@@ -13,7 +13,7 @@ const (
 	ssRP        = "ss_data_rp"
 	ssDur       = "1w" //数据保存1周
 	ssMeasure   = "flow"
-	maxQueueLen = 100
+	maxQueueLen = 10
 )
 
 // DataMeta 数据
@@ -146,14 +146,16 @@ func (c *influxdbClient) onWrite(ms []*DataMeta) (err error) {
 		logger.Warningf("Write points err: %v", err)
 		return
 	}
+	logger.Infof("onWrite %d records", len(ms))
 	return
 }
 
 func (c *influxdbClient) writeDataMetaRoutine(wg *sync.WaitGroup) {
 	wg.Done()
-	ms := make([]*DataMeta, 0, maxQueueLen/2)
+	bufferLen := maxQueueLen / 2
+	ms := make([]*DataMeta, 0, bufferLen)
 	for m := range c.dataCh {
-		if len(ms) >= maxQueueLen {
+		if len(ms) >= bufferLen {
 			c.onWrite(ms)
 			ms = ms[:0]
 		}
