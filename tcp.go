@@ -131,12 +131,6 @@ func tcpRemote(host string, port int, shadow func(net.Conn) net.Conn) {
 
 			logger.Info("proxy %s <-> %s", c.RemoteAddr(), tgt)
 			wLen, rLen, err := relay(c, rc)
-			if err != nil {
-				if err, ok := err.(net.Error); ok && err.Timeout() {
-					return // ignore i/o timeout
-				}
-				logger.Warning("relay error: %v", err)
-			}
 			if infuxdb != nil {
 				infuxdb.writeDataMeta(&DataMeta{
 					Host:      host,
@@ -147,6 +141,12 @@ func tcpRemote(host string, port int, shadow func(net.Conn) net.Conn) {
 					WLen:      wLen,
 					Timestamp: time.Now(),
 				})
+			}
+			if err != nil {
+				if err, ok := err.(net.Error); ok && err.Timeout() {
+					return // ignore i/o timeout
+				}
+				logger.Warning("relay error: %v", err)
 			}
 		}()
 	}
@@ -174,7 +174,7 @@ func relay(left, right net.Conn) (int64, int64, error) {
 	rs := <-ch
 
 	if err == nil {
-		err = rs.Err
+		return n, rs.N, rs.Err
 	}
 	return n, rs.N, err
 }
