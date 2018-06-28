@@ -9,10 +9,8 @@ import (
 )
 
 const (
-	ssDB     = "ss_data"
-	ssFlow   = "flow"
-	ssYearRP = "ss_data_year_rp"
-	ssStat   = "stat"
+	ssDB   = "ss_data"
+	ssFlow = "flow"
 
 	maxQueueLen = 10
 )
