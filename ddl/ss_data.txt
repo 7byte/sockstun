@@ -1,0 +1,15 @@
+# DDL
+
+CREATE DATABASE ss_data
+
+CREATE RETENTION POLICY ss_data_rp ON ss_data DURATION 2w REPLICATION 1 DEFAULT
+
+CREATE RETENTION POLICY ss_data_year_rp ON ss_data DURATION 52w REPLICATION 1
+
+CREATE CONTINUOUS QUERY ss_data_daily_cq ON ss_data 
+BEGIN
+  SELECT sum(rlen) as rlen, sum(wlen) as wlen
+  INTO ss_data_year_rp.stat
+  FROM flow
+  GROUP BY time(1d),* 
+END

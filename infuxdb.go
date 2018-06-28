@@ -9,10 +9,11 @@ import (
 )
 
 const (
-	ssDB        = "ss_data"
-	ssRP        = "ss_data_rp"
-	ssDur       = "1w" //数据保存1周
-	ssMeasure   = "flow"
+	ssDB     = "ss_data"
+	ssFlow   = "flow"
+	ssYearRP = "ss_data_year_rp"
+	ssStat   = "stat"
+
 	maxQueueLen = 10
 )
 
@@ -46,7 +47,6 @@ func newInfluxdbClient(conf *influxDBConfig) (c *influxdbClient, err error) {
 	c = &influxdbClient{conf: conf}
 	infuxdb = c
 
-	c.createDatabase()
 	c.dataCh = make(chan *DataMeta, maxQueueLen)
 	c.done = make(chan struct{})
 	wg := &sync.WaitGroup{}
@@ -86,25 +86,6 @@ func queryDB(clnt client.Client, cmd string) (res []client.Result, err error) {
 	return res, nil
 }
 
-func (c *influxdbClient) createDatabase() (err error) {
-	clnt, err := c.newClient()
-	if err != nil {
-		return
-	}
-	defer clnt.Close()
-	_, err = queryDB(clnt, fmt.Sprintf("create database %v", ssDB))
-	if err != nil {
-		logger.Warningf("create database failed: %v", err)
-		return
-	}
-	_, err = queryDB(clnt, fmt.Sprintf("create retention policy %v on %v duration %v replication 1 default", ssRP, ssDB, ssDur))
-	if err != nil {
-		logger.Warningf("create retention policy failed: %v", err)
-		return
-	}
-	return
-}
-
 func (c *influxdbClient) writeDataMeta(m *DataMeta) {
 	select {
 	case <-c.done:
@@ -135,15 +116,15 @@ func (c *influxdbClient) onWrite(ms []*DataMeta) (err error) {
 			"rlen":  m.RLen,
 			"wlen":  m.WLen,
 		}
-		pt, err := client.NewPoint(ssMeasure, tags, fields, m.Timestamp)
+		pt, err := client.NewPoint(ssFlow, tags, fields, m.Timestamp)
 		if err != nil {
-			logger.Warningf("New point failed: %v", err)
+			logger.Warning("New point failed: %v", err)
 			continue
 		}
 		bp.AddPoint(pt)
 	}
 	if err = clnt.Write(bp); err != nil {
-		logger.Warningf("Write points err: %v", err)
+		logger.Warning("Write points err: %v", err)
 		return
 	}
 	logger.Infof("onWrite %d records", len(ms))

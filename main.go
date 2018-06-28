@@ -60,15 +60,16 @@ func main() {
 	if err != nil {
 		return
 	}
-	if _, err := newInfluxdbClient(conf.InfluxDB); err != nil {
-		return
-	}
 	udpTimeout = conf.UDPTimeout
 
 	if conf.LogLevel >= logging.ERROR && conf.LogLevel <= logging.DEBUG {
 		logLevel = conf.LogLevel
 	}
 	setLogger(logLevel)
+
+	if _, err := newInfluxdbClient(conf.InfluxDB); err != nil {
+		return
+	}
 
 	if err = writePID(pidName); err != nil {
 		logger.Error("write pid failed: %v", err)
