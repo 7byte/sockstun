@@ -42,6 +42,9 @@ func newInfluxdbClient(conf *influxDBConfig) (c *influxdbClient, err error) {
 	if conf == nil {
 		return
 	}
+	if !conf.Enable {
+		return
+	}
 	c = &influxdbClient{conf: conf}
 	infuxdb = c
 

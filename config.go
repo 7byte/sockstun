@@ -26,6 +26,7 @@ type node struct {
 
 // influxdb配置
 type influxDBConfig struct {
+	Enable   bool   `json:"enable"`
 	Addr     string `json:"addr"`
 	User     string `json:"user"`
 	Password string `json:"password"`
