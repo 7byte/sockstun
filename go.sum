@@ -1,0 +1,10 @@
+github.com/Yawning/chacha20 v0.0.0-20170904085104-e3b1f968fc63 h1:I6/SJSN9wJMJ+ZyQaCHUlzoTA4ypU5Bb44YWR1wTY/0=
+github.com/Yawning/chacha20 v0.0.0-20170904085104-e3b1f968fc63/go.mod h1:nf+Komq6fVP4SwmKEaVGxHTyQGKREVlwjQKpvOV39yE=
+github.com/influxdata/influxdb v1.7.6 h1:8mQ7A/V+3noMGCt/P9pD09ISaiz9XvgCk303UYA3gcs=
+github.com/influxdata/influxdb v1.7.6/go.mod h1:qZna6X/4elxqT3yI9iZYdZrWWdeFOOprn86kgg4+IzY=
+github.com/op/go-logging v0.0.0-20160211212156-b2cb9fa56473 h1:J1QZwDXgZ4dJD2s19iqR9+U00OWM2kDzbf1O/fmvCWg=
+github.com/op/go-logging v0.0.0-20160211212156-b2cb9fa56473/go.mod h1:HzydrMdWErDVzsI23lYNej1Htcns9BCg93Dk0bBINWk=
+github.com/shadowsocks/go-shadowsocks2 v0.0.0-20180415152130-7358a5c14bd0 h1:C0mSLWCxHAgu2370ZR9SZCVuudWMRZ8FrbVyDmmLvY4=
+github.com/shadowsocks/go-shadowsocks2 v0.0.0-20180415152130-7358a5c14bd0/go.mod h1:R+KWaoIwRRhnpw6XV+dZil0XHi64Hc1D7hXUyXTjUzQ=
+golang.org/x/crypto v0.0.0-20180319061731-c3a3ad6d03f7 h1:ryKu9k3oWWgQUTahNaa+lDY2fruNO/7fqQVKQfl0Vmc=
+golang.org/x/crypto v0.0.0-20180319061731-c3a3ad6d03f7/go.mod h1:6SG95UA2DQfeDnfUPMdvaQW0Q7yPrPDi9nlGo2tz2b4=

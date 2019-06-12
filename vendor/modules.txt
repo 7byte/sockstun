@@ -1,0 +1,18 @@
+# github.com/Yawning/chacha20 v0.0.0-20170904085104-e3b1f968fc63
+github.com/Yawning/chacha20
+# github.com/influxdata/influxdb v1.7.6
+github.com/influxdata/influxdb/client/v2
+github.com/influxdata/influxdb/models
+github.com/influxdata/influxdb/pkg/escape
+# github.com/op/go-logging v0.0.0-20160211212156-b2cb9fa56473
+github.com/op/go-logging
+# github.com/shadowsocks/go-shadowsocks2 v0.0.0-20180415152130-7358a5c14bd0
+github.com/shadowsocks/go-shadowsocks2/core
+github.com/shadowsocks/go-shadowsocks2/socks
+github.com/shadowsocks/go-shadowsocks2/shadowaead
+github.com/shadowsocks/go-shadowsocks2/shadowstream
+# golang.org/x/crypto v0.0.0-20180319061731-c3a3ad6d03f7
+golang.org/x/crypto/chacha20poly1305
+golang.org/x/crypto/hkdf
+golang.org/x/crypto/internal/chacha20
+golang.org/x/crypto/poly1305
